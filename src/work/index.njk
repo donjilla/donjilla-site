@@ -1,0 +1,77 @@
+---
+layout: base.njk
+title: "Work — Don Jilla Photography"
+description: "Complete archive of Don Jilla's concert and event photography. Four Chord Music Festival, Mon Music Festival, Myspace Nite, and more. Pittsburgh, PA."
+bodyClass: "page-directory"
+---
+
+{% block content %}
+
+<div class="directory-header">
+  <h1>Work</h1>
+  <p class="directory-sub">{{ shoots | length }} shoots across {{ shoots | groupByEvent | length }} events</p>
+</div>
+
+<!-- Filter Bar -->
+<div class="filter-bar" id="filterBar">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="festival">Four Chord Fest</button>
+  <button class="filter-btn" data-filter="live">Live Music</button>
+  <button class="filter-btn" data-filter="events">Underground Events</button>
+</div>
+
+<!-- Directory: grouped by event -->
+<div class="directory" id="directory">
+
+  {% set groups = shoots | groupByEvent %}
+  {% for group in groups %}
+  <div class="event-group" data-category="{{ group.category }}">
+    <div class="event-group-header">
+      <div>
+        <h2 class="event-name">{{ group.event }}</h2>
+        <span class="event-meta">{{ group.year }} · {{ group.shoots | length }} shoot{{ 's' if group.shoots | length > 1 else '' }}</span>
+      </div>
+      <span class="event-tag">{{ group.category | categoryLabel }}</span>
+    </div>
+    <div class="shoot-grid">
+      {% for shoot in group.shoots %}
+      <a href="/work/{{ shoot.slug }}/" class="shoot-card-sm" data-category="{{ shoot.category }}">
+        <div class="card-image-sm">
+          {% if shoot.cover %}
+            <img src="/images/{{ shoot.slug }}/{{ shoot.cover }}"
+                 alt="{{ shoot.artist }} — {{ shoot.event }} {{ shoot.year }}"
+                 loading="lazy">
+          {% else %}
+            <div class="card-placeholder-sm">
+              <span>{{ shoot.artist[0] }}</span>
+            </div>
+          {% endif %}
+          <div class="card-overlay-sm">
+            <span>View →</span>
+          </div>
+        </div>
+        <p class="card-name-sm">{{ shoot.artist }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Category filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.event-group').forEach(group => {
+        group.style.display = (filter === 'all' || group.dataset.category === filter) ? '' : 'none';
+      });
+    });
+  });
+</script>
+{% endblock %}

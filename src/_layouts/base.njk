@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title if title else "Don Jilla — Photography" }}</title>
+  <meta name="description" content="{{ description if description else 'Don Jilla — live music, underground events, and fringe lifestyle photography. Pittsburgh, PA.' }}">
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="{{ title if title else 'Don Jilla — Photography' }}">
+  <meta property="og:description" content="{{ description if description else 'Don Jilla — live music, underground events, and fringe lifestyle photography. Pittsburgh, PA.' }}">
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://donjilla.com{{ page.url }}">
+  {% if ogImage %}
+  <meta property="og:image" content="https://donjilla.com{{ ogImage }}">
+  {% endif %}
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://donjilla.com{{ page.url }}">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  {% block head %}{% endblock %}
+</head>
+<body class="{{ bodyClass if bodyClass else '' }}">
+
+  <nav id="nav">
+    <a href="/" class="nav-logo">DON JILLA</a>
+    <ul class="nav-links">
+      <li><a href="/work/" {% if page.url.startsWith('/work') %}class="active"{% endif %}>Work</a></li>
+      <li><a href="/about/" {% if page.url == '/about/' %}class="active"{% endif %}>About</a></li>
+      <li><a href="/contact/" {% if page.url == '/contact/' %}class="active"{% endif %}>Contact</a></li>
+    </ul>
+    <button class="nav-burger" id="burgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/work/"    onclick="closeMobile()">Work</a>
+    <a href="/about/"   onclick="closeMobile()">About</a>
+    <a href="/contact/" onclick="closeMobile()">Contact</a>
+  </div>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <span class="footer-logo">DON JILLA</span>
+    <div class="social-links">
+      <a href="https://www.instagram.com/donjilla" target="_blank" rel="noopener">Instagram</a>
+      <a href="mailto:doctorjilla@icloud.com">Email</a>
+    </div>
+    <span class="footer-copy">© {{ "" | year }} — Pittsburgh, PA. All rights reserved.</span>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    // Mobile menu
+    const burger = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    function closeMobile() { mobileMenu.classList.remove('open'); }
+  </script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

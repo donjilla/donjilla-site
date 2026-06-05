@@ -1,0 +1,86 @@
+---
+layout: base.njk
+title: "Don Jilla — Photography"
+description: "Don Jilla — live music, underground events, and fringe lifestyle photography. Pittsburgh, PA. Four Chord Music Festival, Mon Music Festival, and more."
+bodyClass: "page-home"
+---
+
+{% block content %}
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-bg">
+    {# Replace hero-bg background-image in style.css with your hero photo #}
+  </div>
+  <div class="hero-content">
+    <p class="hero-label">Pittsburgh, PA — Live Music · Underground Events · Festival Photography</p>
+    <h1 class="hero-name">
+      <span>DON</span>
+      <span>JILLA</span>
+    </h1>
+    <p class="hero-tagline">dead set on life.</p>
+    <a href="/work/" class="btn btn-outline hero-cta">View All Work ↗</a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ── Featured Work ── -->
+<section class="featured">
+  <div class="section-header">
+    <h2 class="section-title">Selected Work</h2>
+    <a href="/work/" class="section-link">All Work →</a>
+  </div>
+
+  <div class="featured-grid">
+    {% for shoot in shoots %}
+      {% if shoot.featured %}
+      <a href="/work/{{ shoot.slug }}/" class="shoot-card" data-category="{{ shoot.category }}">
+        <div class="card-image">
+          {% if shoot.cover %}
+            <img src="/images/{{ shoot.slug }}/{{ shoot.cover }}"
+                 alt="{{ shoot.artist }} live at {{ shoot.event }} {{ shoot.year }} — Don Jilla Photography"
+                 loading="lazy">
+          {% else %}
+            <div class="card-placeholder">
+              <span>{{ shoot.artist }}</span>
+            </div>
+          {% endif %}
+        </div>
+        <div class="card-meta">
+          <span class="card-title">{{ shoot.artist }}</span>
+          <span class="card-event">{{ shoot.event }} · {{ shoot.year }}</span>
+          <span class="card-tag">{{ shoot.category | categoryLabel }}</span>
+        </div>
+      </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ── About Strip ── -->
+<section class="about-strip">
+  <div class="about-strip-inner">
+    <div class="about-strip-text">
+      <p class="label-mono">About</p>
+      <h2>Shooting from<br>the inside out.</h2>
+      <p>Seven years embedded in Pittsburgh's live music and underground event scenes. Four Chord Music Festival, Mon Music Festival, Myspace Nite, and everywhere in between.</p>
+      <a href="/about/" class="btn btn-outline">Full Bio →</a>
+    </div>
+    <div class="about-strip-stats">
+      <div class="stat">
+        <span class="stat-num">7<em>+</em></span>
+        <span class="stat-label">Years Active</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">2<em>x</em></span>
+        <span class="stat-label">Four Chord Fest</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">PGH</span>
+        <span class="stat-label">Pittsburgh & Beyond</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

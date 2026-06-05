@@ -1,0 +1,139 @@
+---
+pagination:
+  data: shoots
+  size: 1
+  alias: shoot
+permalink: "work/{{ shoot.slug }}/"
+layout: base.njk
+---
+
+{# Dynamic front matter values via computed data #}
+{% set title = shoot.artist + " — " + shoot.event + " " + shoot.year + " | Don Jilla Photography" %}
+{% set description = shoot.description if shoot.description else (shoot.artist + " live at " + shoot.event + ", " + shoot.venue + " " + shoot.year + ". Concert photography by Don Jilla.") %}
+{% set ogImage = ("/images/" + shoot.slug + "/" + shoot.cover) if shoot.cover else "" %}
+
+{% block content %}
+
+<!-- Shoot Header -->
+<div class="shoot-header">
+  <a href="/work/" class="back-link">← All Work</a>
+  <div class="shoot-title-block">
+    <span class="shoot-cat-tag">{{ shoot.category | categoryLabel }}</span>
+    <h1 class="shoot-artist">{{ shoot.artist }}</h1>
+    <p class="shoot-details">
+      <span>{{ shoot.event }}</span>
+      <span class="sep">·</span>
+      <span>{{ shoot.venue }}</span>
+      <span class="sep">·</span>
+      <span>{{ shoot.year }}</span>
+    </p>
+  </div>
+</div>
+
+<!-- Gallery -->
+{% if shoot.images | length > 0 %}
+<div class="shoot-gallery" id="gallery">
+  {% for img in shoot.images %}
+  <div class="gallery-item" onclick="openLightbox({{ loop.index0 }})">
+    <img src="/images/{{ shoot.slug }}/{{ img }}"
+         alt="{{ shoot.artist }} live at {{ shoot.event }} {{ shoot.year }} — photo {{ loop.index }} by Don Jilla"
+         loading="lazy">
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxBg(event)">
+  <button class="lb-close" onclick="closeLightbox()">×</button>
+  <button class="lb-prev" onclick="prevImage()">‹</button>
+  <button class="lb-next" onclick="nextImage()">›</button>
+  <div class="lb-inner">
+    <img id="lbImg" src="" alt="">
+    <p class="lb-caption" id="lbCaption"></p>
+  </div>
+</div>
+
+{% else %}
+<div class="shoot-empty">
+  <p class="label-mono">Images coming soon</p>
+  <p>This shoot is in the archive. Photos will be published here once processed.</p>
+</div>
+{% endif %}
+
+<!-- Navigation between shoots -->
+<div class="shoot-nav">
+  <a href="/work/" class="btn btn-outline">← Back to Directory</a>
+</div>
+
+<!-- Schema: Event + ImageObject for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "{{ shoot.event }}",
+  "location": {
+    "@type": "Place",
+    "name": "{{ shoot.venue }}"
+  },
+  "startDate": "{{ shoot.year }}",
+  "image": {% if shoot.cover %}"https://donjilla.com/images/{{ shoot.slug }}/{{ shoot.cover }}"{% else %}""{% endif %},
+  "description": "{{ description }}"
+}
+</script>
+
+{% endblock %}
+
+{% block scripts %}
+{% if shoot.images | length > 0 %}
+<script>
+  const images = {{ shoot.images | dump }};
+  const slug   = "{{ shoot.slug }}";
+  const artist = "{{ shoot.artist }}";
+  const event  = "{{ shoot.event }} {{ shoot.year }}";
+  let current  = 0;
+
+  const lb      = document.getElementById('lightbox');
+  const lbImg   = document.getElementById('lbImg');
+  const lbCap   = document.getElementById('lbCaption');
+
+  function openLightbox(i) {
+    current = i;
+    showImage();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function showImage() {
+    lbImg.src = `/images/${slug}/${images[current]}`;
+    lbImg.alt = `${artist} — ${event}`;
+    lbCap.textContent = `${artist} — ${event} (${current + 1} / ${images.length})`;
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeLightboxBg(e) {
+    if (e.target === lb) closeLightbox();
+  }
+
+  function nextImage() {
+    current = (current + 1) % images.length;
+    showImage();
+  }
+
+  function prevImage() {
+    current = (current - 1 + images.length) % images.length;
+    showImage();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')      closeLightbox();
+    if (e.key === 'ArrowRight')  nextImage();
+    if (e.key === 'ArrowLeft')   prevImage();
+  });
+</script>
+{% endif %}
+{% endblock %}

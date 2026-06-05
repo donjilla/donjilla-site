@@ -1,0 +1,72 @@
+---
+layout: base.njk
+title: "Contact — Don Jilla Photography"
+description: "Contact Don Jilla for editorial commissions, gallery inquiries, licensing, and press kit requests. Pittsburgh, PA."
+bodyClass: "page-contact"
+---
+
+{% block content %}
+<div class="contact-page">
+  <div class="contact-header">
+    <h1>Contact</h1>
+    <p>Editorial commissions, gallery inquiries, licensing, and print sales.<br>
+    Or reach out directly: <a href="mailto:doctorjilla@icloud.com">doctorjilla@icloud.com</a></p>
+  </div>
+
+  {#
+    Wire this form to a real endpoint before launch.
+    Easiest options (both free):
+      1. Netlify Forms — add `netlify` attribute to the <form> tag and remove onsubmit
+      2. Formspree — change action to https://formspree.io/f/YOUR_ID
+  #}
+  <form class="contact-form" onsubmit="handleSubmit(event)">
+    <div class="form-row">
+      <div class="form-field">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required>
+      </div>
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label for="org">Organization / Publication</label>
+        <input type="text" id="org" name="organization" placeholder="Optional">
+      </div>
+      <div class="form-field">
+        <label for="inquiry">Inquiry Type</label>
+        <select id="inquiry" name="inquiry">
+          <option value="">Select...</option>
+          <option value="editorial">Editorial Commission</option>
+          <option value="gallery">Gallery / Exhibition</option>
+          <option value="licensing">Licensing / Syndication</option>
+          <option value="press">Press Kit Request</option>
+          <option value="print">Print Inquiry</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Tell me about your project or inquiry..." required></textarea>
+    </div>
+    <div class="form-submit">
+      <button type="submit" class="btn btn-primary">Send Message ↗</button>
+      <p class="form-success" id="formSuccess">MESSAGE SENT — I'LL BE IN TOUCH.</p>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('formSuccess').style.display = 'block';
+    e.target.reset();
+    setTimeout(() => { document.getElementById('formSuccess').style.display = 'none'; }, 6000);
+  }
+</script>
+{% endblock %}
