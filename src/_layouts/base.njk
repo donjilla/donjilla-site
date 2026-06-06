@@ -49,7 +49,7 @@
   </div>
 
   <main>
-    {% block content %}{% endblock %}
+    {{ content | safe }}
   </main>
 
   <footer>
