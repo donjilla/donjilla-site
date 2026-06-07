@@ -8,7 +8,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("categoryLabel", (cat) => ({
     festival:  "Four Chord Music Fest",
     live:      "Live Music",
-    events:    "Underground Events",
+    events:    "Other Events",
     lifestyle: "Fringe Lifestyle",
   }[cat] || cat));
 
