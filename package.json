@@ -4,9 +4,12 @@
   "description": "donjilla.com — photography portfolio and archive directory",
   "scripts": {
     "build": "npx @11ty/eleventy",
-    "start": "npx @11ty/eleventy --serve --watch"
+    "start": "npx @11ty/eleventy --serve --watch",
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.6"
+    "@11ty/eleventy": "^3.1.6",
+    "wrangler": "^4.98.0"
   }
 }
