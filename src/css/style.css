@@ -209,7 +209,7 @@ footer {
   /*
   ════════════════════════════════════════════════════
   ADD YOUR HERO IMAGE:
-    background-image: url('/images/hero.jpg');
+    background-image: url('/images/four-chord-11-blink-182/four-chord-11-blink-182-1.jpg');
     background-size: cover;
     background-position: center top;
   Then remove the gradient lines below.
@@ -888,6 +888,81 @@ footer {
   letter-spacing: 0.12em;
   color: var(--accent);
 }
+
+/* ══════════════════════════════════════════════════════
+   MAILING LIST / NOTIFY
+══════════════════════════════════════════════════════ */
+
+.notify-form { margin-top: 2rem; max-width: 480px; }
+.notify-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.notify-row input[type="email"] {
+  flex: 1; min-width: 220px;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+.notify-row input[type="email"]:focus { outline: 1px solid var(--accent); }
+.notify-fine { margin-top: 0.75rem; font-size: 0.78rem; color: var(--muted); }
+.notify-success { color: var(--accent); font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.1em; margin-top: 1rem; }
+
+.mailing-list-section { margin-top: 5rem; padding-top: 4rem; border-top: 1px solid var(--border); }
+.mailing-list-inner { max-width: 560px; }
+.mailing-list-inner h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0.5rem 0 1rem; }
+.mailing-list-inner p { color: var(--muted); margin-bottom: 1.5rem; }
+.newsletter-form .notify-row { margin-top: 0; }
+
+/* Footer newsletter */
+.footer-newsletter {
+  width: 100%;
+  padding: 2.5rem var(--page-pad);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.footer-newsletter-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.footer-newsletter-form { display: flex; gap: 0.5rem; flex: 1; max-width: 400px; }
+.footer-newsletter-form input[type="email"] {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+}
+.footer-newsletter-form input[type="email"]:focus { outline: 1px solid var(--accent); }
+.footer-newsletter-form button {
+  padding: 0.6rem 1.2rem;
+  background: var(--text);
+  color: var(--black);
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.footer-newsletter-form button:hover { opacity: 0.75; }
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.5rem var(--page-pad);
+}
+.hidden { display: none; }
 
 /* ══════════════════════════════════════════════════════
    RESPONSIVE

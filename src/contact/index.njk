@@ -1,7 +1,7 @@
 ---
 layout: base.njk
 title: "Contact — Don Jilla Photography"
-description: "Contact Don Jilla for editorial commissions, gallery inquiries, licensing, and press kit requests. Pittsburgh, PA."
+description: "Contact Don Jilla for editorial commissions, gallery inquiries, licensing, and press kit requests. Pittsburgh, PA based concert and event photographer."
 bodyClass: "page-contact"
 ---
 
@@ -13,13 +13,9 @@ bodyClass: "page-contact"
     Or reach out directly: <a href="mailto:doctorjilla@icloud.com">doctorjilla@icloud.com</a></p>
   </div>
 
-  {#
-    Wire this form to a real endpoint before launch.
-    Easiest options (both free):
-      1. Netlify Forms — add `netlify` attribute to the <form> tag and remove onsubmit
-      2. Formspree — change action to https://formspree.io/f/YOUR_ID
-  #}
-  <form class="contact-form" onsubmit="handleSubmit(event)">
+  <form name="contact" class="contact-form" netlify netlify-honeypot="bot-field" data-netlify="true" action="/contact/success/">
+    <input type="hidden" name="form-name" value="contact">
+    <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
     <div class="form-row">
       <div class="form-field">
         <label for="name">Name</label>
@@ -54,19 +50,26 @@ bodyClass: "page-contact"
     </div>
     <div class="form-submit">
       <button type="submit" class="btn btn-primary">Send Message ↗</button>
-      <p class="form-success" id="formSuccess">MESSAGE SENT — I'LL BE IN TOUCH.</p>
     </div>
   </form>
-</div>
-{% endblock %}
 
-{% block scripts %}
-<script>
-  function handleSubmit(e) {
-    e.preventDefault();
-    document.getElementById('formSuccess').style.display = 'block';
-    e.target.reset();
-    setTimeout(() => { document.getElementById('formSuccess').style.display = 'none'; }, 6000);
-  }
-</script>
+  <!-- Mailing List -->
+  <div class="mailing-list-section">
+    <div class="mailing-list-inner">
+      <p class="label-mono">Stay in the loop</p>
+      <h2>New work. First look.</h2>
+      <p>Get notified when new albums drop — concerts, festivals, events. No spam, unsubscribe any time.</p>
+      <!-- MAILCHIMP: Replace the form action URL below with your Mailchimp embed URL -->
+      <!-- Instructions: mailchimp.com → Audience → Signup Forms → Embedded Forms → copy the action URL -->
+      <form name="newsletter" class="newsletter-form" netlify netlify-honeypot="bot-field" data-netlify="true">
+        <input type="hidden" name="form-name" value="newsletter">
+        <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
+        <div class="notify-row">
+          <input type="email" name="email" placeholder="your@email.com" required>
+          <button type="submit" class="btn btn-primary">Subscribe ↗</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

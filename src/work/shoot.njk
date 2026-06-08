@@ -56,7 +56,20 @@ layout: base.njk
 {% else %}
 <div class="shoot-empty">
   <p class="label-mono">Images coming soon</p>
-  <p>This shoot is coming soon. Photos will be published here once processed.</p>
+  <p>This shoot is being processed. Get notified when photos go live.</p>
+  <div class="notify-form">
+    <form name="notify-{{ shoot.slug }}" netlify netlify-honeypot="bot-field" data-netlify="true">
+      <input type="hidden" name="form-name" value="notify-{{ shoot.slug }}">
+      <input type="hidden" name="shoot" value="{{ shoot.artist }} — {{ shoot.event }} {{ shoot.year }}">
+      <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <div class="notify-row">
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <button type="submit" class="btn btn-primary">Notify Me ↗</button>
+      </div>
+      <p class="notify-fine">Get notified when <strong>{{ shoot.artist }}</strong> photos are uploaded. No spam.</p>
+    </form>
+    <p class="notify-success" style="display:none">You're on the list — we'll email you when this album drops.</p>
+  </div>
 </div>
 {% endif %}
 

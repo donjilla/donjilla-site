@@ -4,3 +4,6 @@ node_modules/
 *.log
 *.tif
 *.TIF
+
+# Local Netlify folder
+.netlify
